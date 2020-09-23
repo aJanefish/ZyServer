@@ -20,6 +20,7 @@ import entity.Resp;
 import handler.BlogHandler;
 import handler.FormHandler;
 import handler.HeaderHandler;
+import handler.OkHttpTestHandler;
 import spark.*;
 import transformer.GsonTransformer;
 
@@ -47,7 +48,7 @@ public class RESTServer {
             }
         }, GsonTransformer.getDefault());
 
-
+        //curl post
         Spark.post("/blog", BlogHandler.POST, GsonTransformer.getDefault());
         Spark.post("/blog/:id", BlogHandler.POST, GsonTransformer.getDefault());
 
@@ -73,6 +74,13 @@ public class RESTServer {
 
         Spark.get("/headers", new HeaderHandler(), GsonTransformer.getDefault());
 
+
+        //OkHttp测试
+        //http://localhost:3434/okhttp
+        //http://localhost:3434/okhttp
+        Spark.get("/okhttp", OkHttpTestHandler.GET, GsonTransformer.getDefault());
+        Spark.post("/okhttp", OkHttpTestHandler.POST, GsonTransformer.getDefault());
+        //在请求返回时调用，添加参数
         Spark.after(new Filter() {
             @Override
             public void handle(Request request, Response response) throws Exception {

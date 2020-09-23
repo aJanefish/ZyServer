@@ -27,6 +27,7 @@ import entity.Resp;
 import spark.Request;
 import spark.Response;
 import spark.Route;
+import util.RequestShow;
 import util.StringUtils;
 
 import static com.j256.ormlite.dao.DaoManager.createDao;
@@ -42,6 +43,8 @@ public enum BlogHandler implements Route {
             long id = getId(request);
             Object result;
             long page = 1L;
+            String body = request.body();
+            RequestShow.show(request, body);
             if (id >= 0) {
                 result = getDao().queryForId(id);
             } else {
@@ -72,27 +75,32 @@ public enum BlogHandler implements Route {
     POST {
         @Override
         public Object handle(Request request, Response response) throws Exception {
-            System.out.println("接受post...");
-            Gson gson = new Gson();
-            String body = request.body();
-            System.out.println("body:" + body);
-            Blog blog = gson.fromJson(body, Blog.class);
+            try {
+                System.out.println("接受post...");
+                Gson gson = new Gson();
+                String body = request.body();
+                System.out.println("body:" + body);
+                Blog blog = gson.fromJson(body, Blog.class);
+                RequestShow.show(request, body);
+                String field = null;
+                if (StringUtils.isEmpty(blog.author)) {
+                    field = "author";
+                } else if (StringUtils.isEmpty(blog.content)) {
+                    field = "content";
+                } else if (StringUtils.isEmpty(blog.title)) {
+                    field = "title";
+                }
+                if (field != null) {
+                    System.out.println("receiver post...400");
+                    return Resp.create(400, " `" + field + "` is empty!");
+                } else {
+                    getDao().create(blog);
+                    System.out.println("receiver post...200");
+                    return Resp.create(200, "OK", blog);
+                }
 
-            String field = null;
-            if (StringUtils.isEmpty(blog.author)) {
-                field = "author";
-            } else if (StringUtils.isEmpty(blog.content)) {
-                field = "content";
-            } else if (StringUtils.isEmpty(blog.title)) {
-                field = "title";
-            }
-            if (field != null) {
-                System.out.println("接受post...400");
-                return Resp.create(400, " `" + field + "` is empty!");
-            } else {
-                getDao().create(blog);
-                System.out.println("接受post...200");
-                return Resp.create(200, "OK", blog);
+            } catch (Exception e) {
+                return Resp.create(404, e.toString());
             }
         }
     },
