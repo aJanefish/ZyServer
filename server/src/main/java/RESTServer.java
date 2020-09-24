@@ -80,7 +80,7 @@ public class RESTServer {
         //http://localhost:3434/okhttp
         Spark.get("/okhttp", OkHttpTestHandler.GET, GsonTransformer.getDefault());
         Spark.post("/okhttp", OkHttpTestHandler.POST, GsonTransformer.getDefault());
-        //在请求返回时调用，添加参数
+
         Spark.after(new Filter() {
             @Override
             public void handle(Request request, Response response) throws Exception {

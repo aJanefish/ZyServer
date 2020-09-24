@@ -17,11 +17,9 @@ public enum OkHttpTestHandler implements Route {
         @Override
         public Object handle(Request request, Response response) throws Exception {
             System.out.println("GET...");
-
             String body = request.body();
             RequestShow.show(request, body);
-
-            return OkHttpResp.create(200, "OK", "");
+            return OkHttpResp.create(200, "OK", "GET from Server,Your Msg is :" + body);
         }
     },
 
@@ -30,15 +28,10 @@ public enum OkHttpTestHandler implements Route {
         public Object handle(Request request, Response response) throws Exception {
             try {
                 System.out.println("post...");
-
                 String body = request.body();
                 System.out.println("body:" + body);
-
                 RequestShow.show(request, body);
-
-                return OkHttpResp.create(200, "OK", "");
-
-
+                return OkHttpResp.create(200, "OK", "POST from Server,Your Msg is :" + body);
             } catch (Exception e) {
                 return OkHttpResp.create(404, e.toString());
             }

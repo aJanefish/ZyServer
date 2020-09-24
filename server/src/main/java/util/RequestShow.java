@@ -14,6 +14,8 @@ public class RequestShow {
     //is_xhr: 1
     //X-Requested-With: XMLHttpRequest
     public static void show(Request request, String body) {
+        p("----------------------------------------------");
+
         //打印请求行
         p(request.requestMethod() + " " + request.url() + " " + request.protocol());
         //打印请求头
@@ -24,11 +26,10 @@ public class RequestShow {
         //打印空格
         p();
         //请求正文
-        if (body == null || body.length() == 0) {
-            p("body == null || body.length() == 0");
-        } else {
-            p(body);
-        }
+
+        p(body);
+        p("----------------------------------------------\n");
+
     }
 
     //HTTP/1.1 200 OK
