@@ -37,7 +37,7 @@ public class Blog {
     public String title;
 
     @DatabaseField(canBeNull = false)
-    public String content;
+    public String address;
 
     @Override
     public String toString() {
@@ -46,7 +46,12 @@ public class Blog {
                 ", date=" + date +
                 ", author='" + author + '\'' +
                 ", title='" + title + '\'' +
+                ", address='" + address + '\'' +
                 ", content='" + content + '\'' +
                 '}';
     }
+
+    @DatabaseField(canBeNull = false)
+    public String content;
+
 }

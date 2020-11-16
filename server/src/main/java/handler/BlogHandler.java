@@ -68,6 +68,7 @@ public enum BlogHandler implements Route {
                 resp.count = getDao().countOf();
                 resp.page = page;
             }
+
             return resp;
         }
     },

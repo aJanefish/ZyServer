@@ -17,10 +17,7 @@
 import com.google.gson.Gson;
 import db.DB;
 import entity.Resp;
-import handler.BlogHandler;
-import handler.FormHandler;
-import handler.HeaderHandler;
-import handler.OkHttpTestHandler;
+import handler.*;
 import spark.*;
 import transformer.GsonTransformer;
 
@@ -81,6 +78,9 @@ public class RESTServer {
         Spark.get("/okhttp", OkHttpTestHandler.GET, GsonTransformer.getDefault());
         Spark.post("/okhttp", OkHttpTestHandler.POST, GsonTransformer.getDefault());
 
+
+        retrofitTest();
+
         Spark.after(new Filter() {
             @Override
             public void handle(Request request, Response response) throws Exception {
@@ -109,5 +109,24 @@ public class RESTServer {
                 response.body(gson.toJson(Resp.create(500, exception.getMessage())));
             }
         });
+    }
+
+    //add --- Retrofit测试
+    private static void retrofitTest() {
+        //http://localhost:3434/retrofit/all.do
+        Spark.get("/retrofit/all.do", RetrofitTestHandler.GET_ALL, GsonTransformer.getDefault());
+
+        //http://localhost:3434/retrofit/user/fish1
+        //http://localhost:3434/retrofit/user/fish2
+        Spark.get("/retrofit/user/fish1", RetrofitTestHandler.fish1, GsonTransformer.getDefault());
+        Spark.get("/retrofit/user/fish2", RetrofitTestHandler.fish2, GsonTransformer.getDefault());
+
+        //http://localhost:3434/retrofit/query?id=1
+        Spark.get("/retrofit/query", RetrofitTestHandler.QUERY, GsonTransformer.getDefault());
+
+
+
+        //curl http://localhost:3434/retrofit -X POST -d 'hello=world'
+        Spark.post("/retrofit", RetrofitTestHandler.POST, GsonTransformer.getDefault());
     }
 }

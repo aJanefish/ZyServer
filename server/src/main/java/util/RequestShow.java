@@ -17,7 +17,8 @@ public class RequestShow {
         p("----------------------------------------------");
 
         //打印请求行
-        p(request.requestMethod() + " " + request.url() + " " + request.protocol());
+        p(request.requestMethod() + " " + request.url() + "?" + request.queryString() + " " + request.protocol());
+
         //打印请求头
         Set<String> headers = request.headers();
         for (String header : headers) {

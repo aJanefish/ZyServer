@@ -47,6 +47,7 @@ public class DB {
         ConnectionSource source = null;
         try {
             source = DB.getConnectionSource();
+            //数据不存在新生成数据
             if (!dbFile.exists()) {
                 File parentFile = dbFile.getParentFile();
                 if (!parentFile.exists()) {
@@ -78,16 +79,19 @@ public class DB {
         }
     }
 
+    //diy default data
     private static List<Blog> generateDefaultBlogList() {
         List<Blog> blogList = new ArrayList<>();
 
-        for (int i = 0; i < 15; i++) {
+        for (int i = 1; i <= 10; i++) {
             Blog blog = new Blog();
-            blog.author = "fish";
-            blog.title = "http" + (i + 1);
-            blog.content = "http test " + (i + 1);
+            blog.author = "fish" + i;
+            blog.title = "retrofit" + (i);
+            blog.address = "https://gitee.com/zhangyuwxf/retrofit.git";
+            blog.content = "http test" + (i);
             blogList.add(blog);
         }
+        System.out.print(blogList);
         return blogList;
     }
 }
