@@ -58,6 +58,30 @@ public enum RetrofitTestHandler implements Route {
             Blog blog = getDao().queryForId(id);
             return OkHttpResp.create(200, "OK", "path fish2", blog);
         }
+    }, ADD {
+        @Override
+        public Object handle(Request request, Response response) throws Exception {
+            System.out.println("ADD ...");
+            String body = request.body();
+            RequestShow.show(request, body);
+            return OkHttpResp.create(200, "OK", "ADD", "ADD");
+        }
+    }, LOGIN {
+        @Override
+        public Object handle(Request request, Response response) throws Exception {
+            System.out.println("LOGIN ...");
+            String body = request.body();
+            RequestShow.show(request, body);
+            return OkHttpResp.create(200, "OK", "LOGIN", "LOGIN:" + body);
+        }
+    }, REGISTER {
+        @Override
+        public Object handle(Request request, Response response) throws Exception {
+            System.out.println("REGISTER ...");
+            String body = request.body();
+            RequestShow.show(request, body);
+            return OkHttpResp.create(200, "OK", "REGISTER", "REGISTER:" + body);
+        }
     },
 
     POST {
