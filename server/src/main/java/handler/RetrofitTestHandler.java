@@ -19,7 +19,17 @@ public enum RetrofitTestHandler implements Route {
     GET_ALL {
         @Override
         public Object handle(Request request, Response response) throws Exception {
-            System.out.println("GET...");
+            System.out.println("GET_ALL...");
+            String body = request.body();
+            RequestShow.show(request, body);
+            //find all Blog
+            List<Blog> list = getDao().queryForAll();
+            return OkHttpResp.create(200, "OK", "all.do", list);
+        }
+    }, POST_ALL {
+        @Override
+        public Object handle(Request request, Response response) throws Exception {
+            System.out.println("POST_ALL...");
             String body = request.body();
             RequestShow.show(request, body);
             //find all Blog

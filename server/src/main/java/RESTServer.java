@@ -115,6 +115,7 @@ public class RESTServer {
     private static void retrofitTest() {
         //http://localhost:3434/retrofit/all.do
         Spark.get("/retrofit/all.do", RetrofitTestHandler.GET_ALL, GsonTransformer.getDefault());
+        Spark.post("/retrofit/all.do", RetrofitTestHandler.POST_ALL, GsonTransformer.getDefault());
 
         //http://localhost:3434/retrofit/user/fish1
         //http://localhost:3434/retrofit/user/fish2
@@ -131,7 +132,6 @@ public class RESTServer {
         Spark.post("/retrofit/login", RetrofitTestHandler.LOGIN, GsonTransformer.getDefault());
         //retrofit/register
         Spark.post("/retrofit/register", RetrofitTestHandler.REGISTER, GsonTransformer.getDefault());
-
 
 
         //curl http://localhost:3434/retrofit -X POST -d 'hello=world'
